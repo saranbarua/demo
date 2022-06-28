@@ -1,10 +1,7 @@
 const mongoose=require('mongoose');
-const Info =require('./user_info');
+const Arr =require('./user_info');
 const express =require('express');
 const app =express();
-const multer=require('multer')
-const bcrypt=require('bcrypt');
-const ImageModel=require('./image')
 
 var bodyParsar= require('body-parser');
 app.use(bodyParsar.json());
@@ -19,7 +16,7 @@ e=>console.error(e)
 
 
 app.post("/", (req, res, next) => {
-  const user = new Info({
+  const user = new Arr({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     email: req.body.email,
@@ -52,8 +49,7 @@ app.post("/", (req, res, next) => {
 
 app.post('/login', function(req,res){
  var name = req.body.name;
- var password= req.body.password;
- Info.findOne({ name :name}, function(err,user){
+ Arr.findOne({ name :name}, function(err,user){
    if(err){
      console.log(err);
      return res.status(500).send();

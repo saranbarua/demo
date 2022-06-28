@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const brcypt=require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const Arrayschema = new mongoose.Schema({
 name: {
     type: String,
     required: true
@@ -16,7 +16,7 @@ password: String,
 
 
 
-userSchema.pre('save',async function(next){
+Arrayschema.pre('save',async function(next){
     try{
       const salt =await brcypt.genSalt(10)
      const hashPassword=await brcypt.hash(this.password, salt)
@@ -29,4 +29,4 @@ userSchema.pre('save',async function(next){
     })
 
 
-module.exports= mongoose.model("Info", userSchema)
+module.exports= mongoose.model("Arr", Arrayschema )
