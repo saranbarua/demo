@@ -1,32 +1,35 @@
 const mongoose=require('mongoose');
-const brcypt=require('bcrypt');
-
-const Arrayschema = new mongoose.Schema({
-name: {
-    type: String,
-    required: true
-},
-email: {
-    type: String,
-    required: true
-}, 
-password: String,
-})
 
 
+const newschema = new mongoose.Schema({ 
+            Address: {
+                type: String,
+                required: true
+            },
+            State: {
+                type: String,
+                required: true
+            }, 
+           Country : { type: String,
+                required: true
+            }
+        });
+        const Arrayschema = new mongoose.Schema({
+            Cname: {
+                type: String,
+                required: true
+            },
+            Position: {
+                type: String,
+                required: true
+            }, 
+            Year: { type: String,
+                required: true
+            }, 
+            Address: newschema 
+            
+            });
 
-
-Arrayschema.pre('save',async function(next){
-    try{
-      const salt =await brcypt.genSalt(10)
-     const hashPassword=await brcypt.hash(this.password, salt)
-    this.password= hashPassword
-    next()
-    }catch(error){
-    next(error)
-    }
-    
-    })
 
 
 module.exports= mongoose.model("Arr", Arrayschema )

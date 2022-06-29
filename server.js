@@ -6,7 +6,7 @@ const app =express();
 var bodyParsar= require('body-parser');
 app.use(bodyParsar.json());
 
-mongoose.connect("mongodb+srv://sarandemo:as4wSNDeNl4HO9xB@cluster0.swixu.mongodb.net/user_info?retryWrites=true&w=majority",() =>{
+mongoose.connect("mongodb+srv://yourid&pass/user_info?retryWrites=true&w=majority",() =>{
     console.log("connected")
 },
 e=>console.error(e)
@@ -18,9 +18,14 @@ e=>console.error(e)
 app.post("/", (req, res, next) => {
   const user = new Arr({
     _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
+    Cname: req.body.Cname,
+   Position: req.body.Position,
+    Year: req.body.Year,
+    Address: req.body.Address,
+    _Address:new mongoose.Types.ObjectId(),
+    Address: req.body.Address,
+    State: req.body.State,
+    Country : req.body.Country
   });
   user.save()
     .then(result => {
@@ -28,10 +33,12 @@ app.post("/", (req, res, next) => {
       res.status(201).json({
         message: "Created user successfully",
         createdUser: {
-            name: result.name,
-            email: result.email,
-            password: result.password,
+            Cname: result.Cname,
+            Position: result.Position,
+            Year: result.Year,
+            Address: result.Address,
             _id: result._id,
+            _Address: result.Address,
             request: {
                 type: 'GET',
                 url: "localhost:8000/info" + result._id
