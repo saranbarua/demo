@@ -1,84 +1,27 @@
 const mongoose=require('mongoose');
-const Arr =require('./user_info');
 const express =require('express');
 const app =express();
 
+
 var bodyParsar= require('body-parser');
 app.use(bodyParsar.json());
+app.use(express.json());
 
-mongoose.connect("mongodb+srv://yourid&pass/user_info?retryWrites=true&w=majority",() =>{
-    console.log("connected")
+
+mongoose.connect("mongodb+srv://sarandemo:as4wSNDeNl4HO9xB@cluster0.swixu.mongodb.net/user_info?retryWrites=true&w=majority",() =>{
+    console.log("connected into DB")
 },
 e=>console.error(e)
 )
 
+ //Import Routes
+ const userRoute = require("./routes/route")
 
 
-
-app.post("/", (req, res, next) => {
-  const user = new Arr({
-    _id: new mongoose.Types.ObjectId(),
-    Cname: req.body.Cname,
-   Position: req.body.Position,
-    Year: req.body.Year,
-    Address: req.body.Address,
-    _Address:new mongoose.Types.ObjectId(),
-    Address: req.body.Address,
-    State: req.body.State,
-    Country : req.body.Country
-  });
-  user.save()
-    .then(result => {
-      console.log(result);
-      res.status(201).json({
-        message: "Created user successfully",
-        createdUser: {
-            Cname: result.Cname,
-            Position: result.Position,
-            Year: result.Year,
-            Address: result.Address,
-            _id: result._id,
-            _Address: result.Address,
-            request: {
-                type: 'GET',
-                url: "localhost:8000/info" + result._id
-            }
-        }
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
-});
-
-app.post('/login', function(req,res){
- var name = req.body.name;
- Arr.findOne({ name :name}, function(err,user){
-   if(err){
-     console.log(err);
-     return res.status(500).send();
-   }
-     if(!user){
-      return res.status(404).send();
-
-     }
-
-     return res.status(200).send();
-    // return bcrypt.compare(password,hash);
- }) 
-
-})
-
-
-
-
-
+ //Route Middlewares
+app.use("/api", userRoute);
 
 app.listen(8000, () => {
-    console.log(`Example app listening on port`)
-  })
+  console.log(`Example app listening on port`)
+})
 
-module.exports =app;

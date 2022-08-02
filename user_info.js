@@ -1,35 +1,25 @@
 const mongoose=require('mongoose');
 
+    const linkSchema = new mongoose.Schema({
+        Facebook: {
+                type: String,
+                required: true
+              },
+      
+        Instagram: {
+                type: String,
+                required: true
+                },
+        Linkedin: {
+               type: String,
+               required: true
+               }
+         });
 
-const newschema = new mongoose.Schema({ 
-            Address: {
-                type: String,
-                required: true
-            },
-            State: {
-                type: String,
-                required: true
-            }, 
-           Country : { type: String,
-                required: true
-            }
-        });
-        const Arrayschema = new mongoose.Schema({
-            Cname: {
-                type: String,
-                required: true
-            },
-            Position: {
-                type: String,
-                required: true
-            }, 
-            Year: { type: String,
-                required: true
-            }, 
-            Address: newschema 
-            
-            });
+    const linksSchema = new mongoose.Schema ({
+        links: linkSchema
+         })
 
 
 
-module.exports= mongoose.model("Arr", Arrayschema )
+module.exports= mongoose.model("Link", linksSchema )
